@@ -1,0 +1,14 @@
+:root{
+    --bs-blue: #372EED;
+    --bs-primary: #372EED;
+}
+
+body{
+    background-color: #E0E1EF;
+    color: #111023;
+}
+
+.btn-primary{
+    background-color: var(--bs-primary);
+}
+

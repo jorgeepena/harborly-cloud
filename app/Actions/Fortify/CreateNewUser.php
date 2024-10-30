@@ -31,10 +31,27 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+        $user->assignRole('customer');
+        
+        // After successfull creation we send a notification email to welcome the user
+        $data = array(
+            'name' => $user->name
+        );
+
+        try {
+            Mail::send('mail._user_registered', $data, function($message) use($user) {
+                $message->to($user->email, $user->name)->subject('Welcome to Harborly!');
+                $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            });
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        return $user;
     }
 }

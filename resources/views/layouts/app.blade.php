@@ -15,10 +15,19 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 	@stack('stylesheets')
 </head>
 <body>
 	@include('layouts.navbar')
+	
+	@auth
+	<div class="container">
+		@include('layouts.partials._user_nav')
+	</div>	
+	@endauth
+
 	@include('layouts.partials._messages')
 	@yield('content')		
 	@include('layouts.footer')
